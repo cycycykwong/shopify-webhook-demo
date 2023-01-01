@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: shopify-webhook-demo
+  profiles:
+    active: ${ENVIRONMENT:local}
+
+security:
+  cors:
+    allowed-methods:
+      - GET
+      - POST
+      - OPTIONS
+    allowed-headers: "*"
+
+api:
+  base-url: ${BASE_URL}
+  returns-uri: ${RETURNS_URI}
+
+shopify:
+  graphql-endpoint: ${SHOPIFY_GRAPHQL_ENDPOINT}
+  access-token: ${SHOPIFY_ACCESS_TOKEN}
+  secretKey: ${SHOPIFY_SECRET_KEY}
+
+server:
+  port: 80

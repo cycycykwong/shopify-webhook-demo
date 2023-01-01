@@ -1,0 +1,15 @@
+status: warn
+
+appender:
+    console:
+        type: Console
+        name: LogToConsole
+        layout:
+            type: PatternLayout
+            pattern: %d{HH:mm:ss.SSS} %style{[%-20.20thread]}{magenta} %highlight{%-5level} %style{%-36.36logger{36}}{cyan} - %msg [%C:%M:%line]%n
+
+rootLogger:
+    level: INFO
+    appenderRef:
+        stdout:
+            ref: LogToConsole

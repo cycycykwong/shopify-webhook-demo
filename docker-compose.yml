@@ -1,0 +1,12 @@
+version: '3.1'
+
+services:
+  returns-webhook:
+    container_name: order-returns-backend
+    image: order-returns-webhook:latest
+    ports:
+      - 80:80
+    environment:
+      - SHOPIFY_SECRET_KEY=XXXXXXXXXX
+      - BASE_URL=http://xxx.com
+      - RETURNS_URI=/xxx/xxx

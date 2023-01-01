@@ -1,0 +1,75 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version "$springBootVersion"
+    id 'io.spring.dependency-management' version '1.1.0'
+    // to build docker image using jib, visit https://github.com/GoogleContainerTools/jib for more details.
+    id 'com.google.cloud.tools.jib' version '3.3.1'
+    // dgs graphql codegen
+    id "com.netflix.dgs.codegen" version '5.6.3'
+}
+
+group = 'com.shopify.webhook'
+version = 'latest'
+sourceCompatibility = '17'
+
+jib {
+    from {
+        image = "amazoncorretto:17"
+    }
+    to {
+        // INFO: update the image name for uploading your docker image directly to the registry
+        image = "shopify-webhook-demo"
+        tags = ["latest"]
+    }
+    container {
+        creationTime = "USE_CURRENT_TIMESTAMP"
+    }
+}
+
+configurations {
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Spring
+    implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-validation:$springBootVersion"
+
+    // Logging
+    implementation "org.springframework.boot:spring-boot-starter-log4j2:$springBootVersion"
+
+    // Web client
+    implementation "org.springframework.boot:spring-boot-starter-webflux:$springBootVersion"
+
+    // GraphQL DGS
+    implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:latest.release"))
+    implementation "com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter"
+
+    implementation 'commons-io:commons-io:2.11.0'
+    implementation 'commons-codec:commons-codec:1.5'
+
+    compileOnly 'org.projectlombok:lombok'
+
+    annotationProcessor(
+            "org.projectlombok:lombok",
+    )
+}
+
+// graphql codegen
+generateJava {
+    packageName = 'com.shopify.webhook.generated'
+    generateClient = true
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

@@ -1,0 +1,47 @@
+type Query {
+    return(id: String): Return!
+}
+
+type Return {
+    order: Order
+    returnLineItems(first: Int): ReturnLineItems!
+}
+
+type Order {
+    id: String!
+    fulfillments: [Fulfillment]!
+}
+
+type Fulfillment {
+    trackingInfo: [TrackingInfo]!
+}
+
+type TrackingInfo {
+    company: String!
+    number: String!
+}
+
+type ReturnLineItems {
+    edges: [ReturnLineItemNode]!
+}
+
+type ReturnLineItemNode {
+    node: ReturnLineItem!
+}
+
+type ReturnLineItem {
+    returnReason: String!
+    fulfillmentLineItem: FulfillmentLineItem!
+}
+
+type FulfillmentLineItem {
+    lineItem: LineItem!
+}
+
+type LineItem {
+    id: String!
+    name: String!
+    quantity: Int!
+    sku: String!
+}
+
