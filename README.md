@@ -101,7 +101,7 @@ buildCache {
 
 4. Create an new order with fulfillments, then create returns in the Shopify management portal
 
-5. Shopify subdomain mapping will be ignored when the application environment is `"local"`. The store code will be default to be `"99999"`
+5. Shopify subdomain mapping will be ignored when the application environment is `"local"`. The subdomain will be default to be `"demo"`
 
 ---
 
